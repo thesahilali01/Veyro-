@@ -1,1 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Veyro — Trading Intelligence</title>
+
+<meta name="description" content="Veyro provides professional trading discipline, risk management and trade review tools.">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+:root{
+  --bg:#070a0f;
+  --surface:#0d1219;
+  --surface2:#111821;
+  --border:#202a36;
+  --text:#f4f7fa;
+  --muted:#8d99a8;
+  --accent:#8bff65;
+  --accent2:#63d8ff;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,Arial,sans-serif;
+  line-height:1.5;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+/* NAVBAR */
+
+.navbar{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(7,10,15,.88);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+
+.nav-inner{
+  max-width:1150px;
+  margin:auto;
+  padding:17px 22px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo{
+  font-size:23px;
+  font-weight:800;
+  letter-spacing:3px;
+}
+
+.logo span{
+  color:var(--accent);
+}
+
+.nav-links{
+  display:flex;
+  gap:25px;
+  color:var(--muted);
+  font-size:14px;
+}
+
+.nav-links a:hover{
+  color:white;
+}
+
+/* HERO */
+
+.hero{
+  max-width:1150px;
+  margin:auto;
+  padding:95px 22px 75px;
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:60px;
+  align-items:center;
+}
+
+.badge{
+  display:inline-block;
+  padding:7px 12px;
+  border:1px solid #26333f;
+  border-radius:30px;
+  color:#b5c0cb;
+  font-size:12px;
+  margin-bottom:22px;
+  background:#0b1016;
+}
+
+.hero h1{
+  font-size:clamp(43px,6vw,70px);
+  line-height:1.02;
+  letter-spacing:-3px;
+  margin-bottom:22px;
+}
+
+.hero h1 span{
+  color:var(--accent);
+}
+
+.hero p{
+  max-width:600px;
+  color:var(--muted);
+  font-size:18px;
+  margin-bottom:32px;
+}
+
+.buttons{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  padding:13px 19px;
+  border-radius:9px;
+  font-weight:700;
+  font-size:14px;
+  border:1px solid var(--border);
+  display:inline-block;
+}
+
+.btn-primary{
+  background:var(--accent);
+  color:#071006;
+  border-color:var(--accent);
+}
+
+.btn-secondary{
+  background:#10161e;
+}
+
+/* HERO CARD */
+
+.hero-card{
+  background:
+    radial-gradient(circle at top right,#183323 0,transparent 42%),
+    var(--surface);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:24px;
+  box-shadow:0 25px 70px rgba(0,0,0,.35);
+}
+
+.card-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:28px;
+}
+
+.card-label{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.status{
+  color:var(--accent);
+  font-size:12px;
+}
+
+.metric{
+  font-size:36px;
+  font-weight:800;
+}
+
+.chart{
+  height:130px;
+  display:flex;
+  align-items:flex-end;
+  gap:8px;
+  margin-top:20px;
+}
+
+.bar{
+  flex:1;
+  background:linear-gradient(to top,#315b37,var(--accent));
+  border-radius:5px 5px 2px 2px;
+  opacity:.85;
+}
+
+/* SECTION */
+
+.section{
+  max-width:1150px;
+  margin:auto;
+  padding:65px 22px;
+}
+
+.section-heading{
+  margin-bottom:30px;
+}
+
+.eyebrow{
+  color:var(--accent);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+
+.section-heading h2{
+  font-size:36px;
+  letter-spacing:-1.5px;
+}
+
+.section-heading p{
+  color:var(--muted);
+  margin-top:9px;
+}
+
+/* TOOLS */
+
+.tools{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+
+.tool{
+  padding:24px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  transition:.2s;
+}
+
+.tool:hover{
+  transform:translateY(-3px);
+  border-color:#354453;
+}
+
+.tool-icon{
+  width:42px;
+  height:42px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#151d26;
+  margin-bottom:20px;
+  font-size:18px;
+}
+
+.tool h3{
+  margin-bottom:8px;
+}
+
+.tool p{
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* CALCULATOR */
+
+.calculator{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.panel{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:26px;
+}
+
+.panel h3{
+  margin-bottom:5px;
+}
+
+.panel-sub{
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:22px;
+}
+
+label{
+  display:block;
+  color:#b7c1cc;
+  font-size:13px;
+  margin:15px 0 7px;
+}
+
+input{
+  width:100%;
+  padding:13px 14px;
+  border-radius:9px;
+  border:1px solid #293542;
+  background:#080c11;
+  color:white;
+  outline:none;
+  font-size:15px;
+}
+
+input:focus{
+  border-color:#647687;
+}
+
+.calculate{
+  width:100%;
+  padding:13px;
+  margin-top:20px;
+  border:0;
+  border-radius:9px;
+  background:var(--accent);
+  color:#071006;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.result{
+  margin-top:18px;
+  padding:17px;
+  background:#080c11;
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:#dce4eb;
+}
+
+.result strong{
+  color:var(--accent);
+  font-size:22px;
+}
+
+/* CHECKLIST */
+
+.checklist{
+  display:grid;
+  gap:12px;
+  margin-top:20px;
+}
+
+.check{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  padding:14px;
+  background:#080c11;
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:#c6ced7;
+  font-size:14px;
+}
+
+.check input{
+  width:18px;
+  height:18px;
+}
+
+/* STATS */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+}
+
+.stat{
+  padding:22px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+}
+
+.stat small{
+  color:var(--muted);
+}
+
+.stat strong{
+  display:block;
+  font-size:26px;
+  margin-top:7px;
+}
+
+/* FOOTER */
+
+footer{
+  border-top:1px solid var(--border);
+  margin-top:50px;
+  padding:35px 22px;
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.footer-logo{
+  color:white;
+  font-weight:800;
+  letter-spacing:3px;
+  margin-bottom:8px;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+  .nav-links{
+    display:none;
+  }
+
+  .hero{
+    grid-template-columns:1fr;
+    padding-top:65px;
+  }
+
+  .hero h1{
+    letter-spacing:-2px;
+  }
+
+  .tools{
+    grid-template-columns:1fr;
+  }
+
+  .calculator{
+    grid-template-columns:1fr;
+  }
+
+  .stats{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:480px){
+
+  .hero{
+    padding-left:17px;
+    padding-right:17px;
+  }
+
+  .section{
+    padding-left:17px;
+    padding-right:17px;
+  }
+
+  .hero h1{
+    font-size:42px;
+  }
+
+  .section-heading h2{
+    font-size:29px;
+  }
+
+  .stats{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+
+<nav class="navbar">
+  <div class="nav-inner">
+
+    <div class="logo">
+      VEYRO<span>.</span>
+    </div>
+
+    <div class="nav-links">
+      <a href="#tools">Tools</a>
+      <a href="#calculator">Calculator</a>
+      <a href="#discipline">Discipline</a>
+    </div>
+
+  </div>
+</nav>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+  <div>
+
+    <div class="badge">
+      TRADING DISCIPLINE PLATFORM
+    </div>
+
+    <h1>
+      Trade with a<br>
+      <span>clearer process.</span>
+    </h1>
+
+    <p>
+      Veyro brings risk planning, trade discipline and review tools
+      into one simple workspace built for serious traders.
+    </p>
+
+    <div class="buttons">
+      <a href="#calculator" class="btn btn-primary">
+        Explore Tools →
+      </a>
+
+      <a href="#discipline" class="btn btn-secondary">
+        Discipline Check
+      </a>
+    </div>
+
+  </div>
+
+
+  <div class="hero-card">
+
+    <div class="card-top">
+      <div>
+        <div class="card-label">DISCIPLINE OVERVIEW</div>
+        <div class="metric">82%</div>
+      </div>
+
+      <div class="status">● ON TRACK</div>
+    </div>
+
+    <div class="card-label">
+      Example dashboard preview
+    </div>
+
+    <div class="chart">
+      <div class="bar" style="height:35%"></div>
+      <div class="bar" style="height:52%"></div>
+      <div class="bar" style="height:44%"></div>
+      <div class="bar" style="height:68%"></div>
+      <div class="bar" style="height:57%"></div>
+      <div class="bar" style="height:82%"></div>
+      <div class="bar" style="height:72%"></div>
+      <div class="bar" style="height:94%"></div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- TOOLS -->
+
+<section class="section" id="tools">
+
+  <div class="section-heading">
+    <div class="eyebrow">Core tools</div>
+    <h2>Built around your process.</h2>
+    <p>
+      Tools designed to help you plan and review your own trading decisions.
+    </p>
+  </div>
+
+  <div class="tools">
+
+    <div class="tool">
+      <div class="tool-icon">◈</div>
+      <h3>Risk Planning</h3>
+      <p>
+        Calculate your predefined risk amount before entering a trade.
+      </p>
+    </div>
+
+    <div class="tool">
+      <div class="tool-icon">✓</div>
+      <h3>Trade Discipline</h3>
+      <p>
+        Run a simple pre-trade checklist before taking action.
+      </p>
+    </div>
+
+    <div class="tool">
+      <div class="tool-icon">↗</div>
+      <h3>Trade Review</h3>
+      <p>
+        Build a record of your own decisions and identify recurring mistakes.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- CALCULATOR -->
+
+<section class="section" id="calculator">
+
+  <div class="section-heading">
+    <div class="eyebrow">Risk tool</div>
+    <h2>Know your predefined risk.</h2>
+    <p>
+      Use your own risk rules to calculate the amount at risk.
+    </p>
+  </div>
+
+  <div class="calculator">
+
+    <div class="panel">
+
+      <h3>Risk Calculator</h3>
+
+      <div class="panel-sub">
+        Enter your trading capital and predefined risk percentage.
+      </div>
+
+      <label>Trading Capital</label>
+      <input id="capital" type="number" placeholder="100000">
+
+      <label>Risk Percentage</label>
+      <input id="risk" type="number" placeholder="1">
+
+      <button class="calculate" onclick="calculateRisk()">
+        Calculate Risk
+      </button>
+
+    </div>
+
+
+    <div class="panel">
+
+      <h3>Calculation</h3>
+
+      <div class="panel-sub">
+        Your predefined risk amount.
+      </div>
+
+      <div class="result" id="riskResult">
+        Enter your values to calculate.
+      </div>
+
+      <div style="margin-top:18px;color:#778391;font-size:12px;">
+        Veyro does not provide investment advice or buy/sell signals.
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- DISCIPLINE -->
+
+<section class="section" id="discipline">
+
+  <div class="section-heading">
+    <div class="eyebrow">Pre-trade</div>
+    <h2>Check your process.</h2>
+    <p>
+      Complete your checklist before taking a trade.
+    </p>
+  </div>
+
+  <div class="panel">
+
+    <div class="checklist">
+
+      <label class="check">
+        <input type="checkbox" class="rule">
+        I have a clear setup.
+      </label>
+
+      <label class="check">
+        <input type="checkbox" class="rule">
+        I know my entry reason.
+      </label>
+
+      <label class="check">
+        <input type="checkbox" class="rule">
+        My stop-loss is planned.
+      </label>
+
+      <label class="check">
+        <input type="checkbox" class="rule">
+        My predefined risk is clear.
+      </label>
+
+      <label class="check">
+        <input type="checkbox" class="rule">
+        This trade is not based on FOMO.
+      </label>
+
+    </div>
+
+    <button class="calculate" onclick="checkDiscipline()">
+      Review Discipline
+    </button>
+
+    <div class="result" id="disciplineResult">
+      Complete the checklist to review your process.
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- STATS PREVIEW -->
+
+<section class="section">
+
+  <div class="section-heading">
+    <div class="eyebrow">Workspace</div>
+    <h2>Your trading, your data.</h2>
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <small>Trades Reviewed</small>
+      <strong>—</strong>
+    </div>
+
+    <div class="stat">
+      <small>Discipline Score</small>
+      <strong>—</strong>
+    </div>
+
+    <div class="stat">
+      <small>Rule Violations</small>
+      <strong>—</strong>
+    </div>
+
+    <div class="stat">
+      <small>Best Setup</small>
+      <strong>—</strong>
+    </div>
+
+  </div>
+
+</section>
+
+
+<footer>
+
+  <div class="footer-logo">VEYRO.</div>
+
+  Smart tools for better trading discipline.
+
+  <br><br>
+
+  © 2026 Veyro. For educational and planning purposes only.
+
+</footer>
+
+
+<script>
+
+function calculateRisk(){
+
+  const capital =
+    Number(document.getElementById("capital").value);
+
+  const risk =
+    Number(document.getElementById("risk").value);
+
+  const result =
+    document.getElementById("riskResult");
+
+  if(capital <= 0 || risk <= 0){
+
+    result.innerHTML =
+      "Please enter valid values.";
+
+    return;
+  }
+
+  const amount =
+    capital * (risk / 100);
+
+  result.innerHTML =
+    "Predefined risk amount<br><strong>₹" +
+    amount.toLocaleString("en-IN",{
+      maximumFractionDigits:2
+    }) +
+    "</strong>";
+}
+
+
+function checkDiscipline(){
+
+  const rules =
+    document.querySelectorAll(".rule");
+
+  let completed = 0;
+
+  rules.forEach(function(rule){
+
+    if(rule.checked){
+      completed++;
+    }
+
+  });
+
+  const score =
+    Math.round((completed / rules.length) * 100);
+
+  const result =
+    document.getElementById("disciplineResult");
+
+  result.innerHTML =
+    "Process completion<br><strong>" +
+    score +
+    "%</strong>";
+}
+
+</script>
+
+</body>
+  </html>
