@@ -4,326 +4,349 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#f7faf8">
-<title>VEYRO | Intelligent Workspace</title>
+<title>VEYRO — Intelligent Workspace</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap');
-
 :root{
- --green:#16865b;--green-dark:#106b49;--mint:#eaf6ef;
- --ink:#18231d;--muted:#89958e;--line:#e9eeea;
- --bg:#f6f8f6;--white:#fff;--soft:#f0f4f1;
- --shadow:0 10px 35px rgba(27,57,39,.045);
+--green:#087F68;--bg:#F7F8F4;--card:#fff;
+--navy:#172B3A;--muted:#718078;--line:#E8EEEB;
+--mint:#B9D9CB;--amber:#D9A441;
+}
+body.dark{
+--bg:#101B20;--card:#19282E;--navy:#F1F7F4;
+--muted:#A5B6AE;--line:#2B3B40;--mint:#294B43;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);
- font-family:'DM Sans',sans-serif}
-button,input{font:inherit}
+body{margin:0;background:var(--bg);color:var(--navy);
+font-family:Arial,sans-serif;transition:.2s}
+button,input,select,textarea{font:inherit}
 button{cursor:pointer}
-.app{min-height:100vh;display:flex}
-.sidebar{
- width:250px;background:#fff;border-right:1px solid var(--line);
- padding:27px 17px 18px;display:flex;flex-direction:column;
- position:fixed;inset:0 auto 0 0;z-index:10
+.layout{display:flex;min-height:100vh}
+.sidebar{width:245px;background:var(--card);border-right:1px solid var(--line);
+padding:24px 15px;position:fixed;top:0;bottom:0;overflow-y:auto}
+.logo{font-size:27px;font-weight:900;letter-spacing:4px;color:var(--green);
+padding:10px 12px 25px}
+.logo small{display:block;font-size:10px;letter-spacing:2px;
+color:var(--muted);margin-top:5px}
+.nav-label{font-size:10px;color:var(--muted);font-weight:bold;
+padding:15px 12px 8px;letter-spacing:2px}
+.nav button{display:block;width:100%;border:0;background:transparent;
+padding:12px;text-align:left;border-radius:9px;color:var(--muted);margin:2px 0}
+.nav button:hover,.nav button.active{background:var(--mint);
+color:var(--green);font-weight:bold}
+.main{margin-left:245px;width:calc(100% - 245px);padding:28px 32px}
+.topbar{display:flex;justify-content:space-between;align-items:center;
+margin-bottom:25px;gap:12px}
+.topbar h2{margin:0;font-size:23px}
+.muted{color:var(--muted);font-size:13px}
+.page{display:none}.page.active{display:block}
+.hero{background:linear-gradient(120deg,#087F68,#164D42);
+color:white;border-radius:18px;padding:30px;margin-bottom:20px}
+.hero h1{font-size:29px;margin:0 0 10px}
+.hero p{color:#D5E9E1;line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.card,.panel{background:var(--card);border:1px solid var(--line);
+border-radius:14px;padding:19px;margin-bottom:15px}
+.metric{font-size:26px;font-weight:bold;margin:12px 0 5px}
+.section-title{font-size:18px;margin:25px 0 14px}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.quick button{background:var(--card);border:1px solid var(--line);
+border-radius:12px;padding:18px;text-align:left;color:var(--navy)}
+.quick strong{display:block;margin:10px 0}
+.btn{border:1px solid var(--line);background:var(--card);
+color:var(--navy);padding:10px 14px;border-radius:9px}
+.btn.primary{background:var(--green);border-color:var(--green);color:white}
+.field{margin:12px 0}
+.field label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+.field input,.field select,.field textarea{
+width:100%;padding:12px;border:1px solid var(--line);
+border-radius:9px;background:var(--bg);color:var(--navy);outline:none}
+.field textarea{min-height:100px;resize:vertical}
+.row{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.result{background:var(--mint);color:#075C4C;border-radius:10px;
+padding:15px;margin-top:15px;line-height:1.8}
+.item{padding:13px 0;border-bottom:1px solid var(--line)}
+.item:last-child{border-bottom:0}
+.tag{font-size:11px;background:var(--mint);color:var(--green);
+padding:5px 8px;border-radius:20px}
+.file-list{margin-top:12px}
+.danger{color:#C75B55}
+footer{margin-top:30px;padding:15px 0;color:var(--muted);
+font-size:12px;border-top:1px solid var(--line)}
+@media(max-width:950px){
+.grid{grid-template-columns:repeat(2,1fr)}
+.sidebar{width:200px}.main{margin-left:200px;width:calc(100% - 200px)}
 }
-.brand{padding:2px 13px 28px}
-.brand-name{font-family:Manrope,sans-serif;font-weight:800;
- font-size:27px;letter-spacing:2px}
-.brand-name span{color:var(--green)}
-.brand-sub{font-size:9px;letter-spacing:2px;color:#a1aaa4;margin-top:4px}
-.nav-label{font-size:9px;font-weight:800;letter-spacing:1.7px;
- color:#a4ada7;padding:15px 13px 9px}
-.nav-btn{width:100%;border:0;background:transparent;text-align:left;
- display:flex;align-items:center;gap:13px;padding:12px 13px;
- border-radius:11px;color:#718078;font-size:13px;font-weight:600;
- margin:2px 0;transition:.2s}
-.nav-btn .ico{font-size:17px;width:20px;text-align:center}
-.nav-btn:hover{background:#f5f8f5;color:var(--green)}
-.nav-btn.active{background:var(--mint);color:var(--green);font-weight:700}
-.sidebar-bottom{margin-top:auto}
-.upgrade{background:#f5f8f5;border:1px solid var(--line);
- border-radius:14px;padding:15px;margin:10px 4px 17px}
-.upgrade b{font-size:12px}
-.upgrade p{font-size:10px;line-height:1.6;color:var(--muted)}
-.upgrade button{border:0;background:var(--green);color:white;
- padding:8px 11px;border-radius:8px;font-size:10px;font-weight:700}
-.user{border-top:1px solid var(--line);padding:17px 7px 0;
- display:flex;align-items:center;gap:10px}
-.avatar{width:34px;height:34px;border-radius:11px;background:#e4f3e9;
- color:var(--green);display:grid;place-items:center;font-weight:800}
-.user b{font-size:11px}.user small{display:block;color:var(--muted);font-size:9px;margin-top:3px}
-.main{margin-left:250px;width:calc(100% - 250px);min-width:0;padding:0 38px 55px}
-.topbar{height:76px;border-bottom:1px solid var(--line);
- display:flex;align-items:center;justify-content:space-between;gap:15px}
-.breadcrumb{font-size:12px;color:#8c9890}
-.top-actions{display:flex;align-items:center;gap:10px}
-.icon-btn{width:36px;height:36px;border:1px solid var(--line);
- border-radius:10px;background:white;color:#65736b}
-.status{border:1px solid #dcebe0;background:#f2faf5;color:var(--green);
- border-radius:30px;padding:8px 12px;font-size:10px;font-weight:700}
-.content{max-width:1450px;margin:auto}
-.page{display:none;padding-top:32px}
-.page.active{display:block;animation:appear .3s ease}
-@keyframes appear{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
-.heading-row{display:flex;justify-content:space-between;align-items:flex-end;gap:15px;margin-bottom:25px}
-h1{font-family:Manrope,sans-serif;font-size:29px;letter-spacing:-1px;margin:0 0 7px}
-.subtitle{font-size:12px;color:var(--muted);margin:0;line-height:1.7}
-.eyebrow{font-size:9px;color:var(--green);font-weight:800;letter-spacing:1.7px;margin-bottom:10px}
-.btn{border:0;background:var(--green);color:white;padding:11px 16px;
- border-radius:9px;font-size:11px;font-weight:700;transition:.2s}
-.btn:hover{background:var(--green-dark);transform:translateY(-1px)}
-.btn-light{background:#eff6f1;color:var(--green)}
-.btn-light:hover{background:#e2f1e7}
-.btn-outline{background:white;color:#647269;border:1px solid var(--line)}
-.btn-outline:hover{background:#f4f8f5}
-.hero{
- border-radius:20px;padding:29px 32px;background:#17251d;color:white;
- display:flex;align-items:center;justify-content:space-between;gap:20px;
- position:relative;overflow:hidden;margin-bottom:19px;min-height:205px
-}
-.hero:after{content:"";position:absolute;width:310px;height:310px;
- border:1px solid rgba(255,255,255,.12);border-radius:50%;
- right:7%;top:-120px;box-shadow:0 0 0 35px rgba(255,255,255,.025),
- 0 0 0 75px rgba(255,255,255,.02)}
-.hero-copy{position:relative;z-index:1;max-width:580px}
-.hero .eyebrow{color:#8de0ad}
-.hero h2{font-family:Manrope,sans-serif;font-size:25px;line-height:1.3;margin:0 0 10px}
-.hero p{color:#c2d0c6;font-size:11px;line-height:1.8;max-width:450px;margin:0 0 19px}
-.hero .btn{background:#8de0ad;color:#143522}
-.hero-mark{position:relative;z-index:1;font-family:Manrope,sans-serif;
- font-size:100px;font-weight:800;color:rgba(142,224,173,.88);padding-right:35px}
-.grid{display:grid;gap:15px}
-.stats{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:23px}
-.panel-grid{grid-template-columns:1.5fr 1fr}
-.card{background:white;border:1px solid var(--line);border-radius:15px;
- padding:19px;box-shadow:var(--shadow);min-width:0}
-.card-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}
-.card-title{font-size:12px;font-weight:800}
-.card-caption{font-size:9px;color:var(--muted)}
-.stat-card{padding:17px 18px}
-.stat-top{display:flex;justify-content:space-between;align-items:center}
-.stat-icon{width:32px;height:32px;border-radius:10px;background:var(--mint);
- display:grid;place-items:center;color:var(--green);font-size:15px}
-.stat-value{font-family:Manrope,sans-serif;font-size:25px;font-weight:800;margin:13px 0 3px}
-.stat-name{font-size:10px;color:var(--muted)}
-.tag{font-size:9px;background:#eff8f2;color:var(--green);padding:5px 7px;border-radius:20px}
-.activity{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid #f0f3f0}
-.activity:last-child{border:0}
-.activity-icon{width:33px;height:33px;border-radius:10px;background:#f1f6f2;
- display:grid;place-items:center;color:var(--green)}
-.activity b{font-size:10px;display:block}
-.activity small{font-size:9px;color:var(--muted)}
-.quick-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-.quick{padding:17px;cursor:pointer;transition:.2s}
-.quick:hover{transform:translateY(-3px);border-color:#c5dfce}
-.quick-icon{font-size:20px;color:var(--green);margin-bottom:12px}
-.quick b{font-size:12px}.quick p{font-size:10px;line-height:1.6;color:var(--muted);margin-bottom:0}
-.section-title{font-size:14px;font-weight:800;margin:25px 0 13px}
-.lab-layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(230px,.8fr);gap:16px}
-.dropzone{border:1.5px dashed #b8d8c3;border-radius:15px;
- background:#fbfefc;padding:36px 18px;text-align:center;cursor:pointer;transition:.2s}
-.dropzone:hover{background:#f1faf4;border-color:var(--green)}
-.drop-icon{width:55px;height:55px;margin:0 auto 13px;border-radius:17px;
- display:grid;place-items:center;background:#e8f5ec;color:var(--green);font-size:25px}
-.dropzone h3{font-size:14px;margin:0 0 7px}
-.dropzone p{font-size:10px;color:var(--muted);line-height:1.7;margin:0 0 16px}
-.formats{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-top:15px}
-.format{font-size:9px;color:#738078;background:#f0f4f1;padding:6px 9px;border-radius:6px}
-.file-list{display:grid;gap:9px;margin-top:15px}
-.file-item{display:flex;align-items:center;gap:10px;padding:11px;
- border:1px solid var(--line);border-radius:11px;background:white}
-.file-symbol{width:35px;height:35px;border-radius:9px;background:#edf6ef;
- display:grid;place-items:center;color:var(--green);font-size:10px;font-weight:800}
-.file-info{flex:1;min-width:0}
-.file-info b{display:block;font-size:10px;overflow-wrap:anywhere}
-.file-info small{display:block;color:var(--muted);font-size:9px;margin-top:4px}
-.remove{border:0;background:#f7f8f7;color:#9b5e5e;border-radius:7px;padding:7px 9px;font-size:10px}
-.info-box{background:#f2f7f3;border:1px solid #e2eee5;border-radius:12px;
- padding:13px;font-size:10px;line-height:1.7;color:#637169;margin-top:14px}
-.info-box b{color:#355a43}
-.feature{display:flex;gap:11px;padding:13px 0;border-bottom:1px solid var(--line)}
-.feature:last-child{border:0}
-.feature-icon{width:31px;height:31px;background:var(--mint);border-radius:9px;
- display:grid;place-items:center;color:var(--green)}
-.feature b{font-size:10px}.feature p{font-size:9px;color:var(--muted);line-height:1.6;margin:4px 0 0}
-.workspace-tools{display:flex;gap:9px;align-items:center}
-.search{border:1px solid var(--line);background:white;border-radius:9px;
- padding:10px 12px;font-size:10px;outline:none;width:190px}
-.search:focus{border-color:#9acbab}
-.table-wrap{overflow:auto;background:white;border:1px solid var(--line);border-radius:14px}
-table{width:100%;border-collapse:collapse;min-width:500px}
-th{text-align:left;padding:14px;font-size:9px;letter-spacing:.8px;color:#8b978f;background:#fafcfa}
-td{padding:14px;border-top:1px solid var(--line);font-size:10px}
-.empty{padding:30px;text-align:center;color:var(--muted);font-size:11px}
-.lesson-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-.lesson{padding:20px}
-.lesson .lesson-icon{width:42px;height:42px;border-radius:12px;
- background:var(--mint);display:grid;place-items:center;color:var(--green);font-size:18px;margin-bottom:15px}
-.lesson h3{font-size:12px;margin:0 0 8px}
-.lesson p{font-size:10px;line-height:1.7;color:var(--muted);min-height:49px}
-.lesson a{font-size:10px;color:var(--green);font-weight:700;text-decoration:none}
-.about-box{max-width:750px}
-.about-box p{font-size:12px;line-height:1.9;color:#748078}
-.mobile-nav{display:none}
-@media(max-width:1000px){
- .main{padding-left:25px;padding-right:25px}
- .stats{grid-template-columns:repeat(2,1fr)}
- .panel-grid{grid-template-columns:1fr}
-}
-@media(max-width:700px){
- .sidebar{width:66px;padding:17px 7px}
- .brand{padding:4px 0 20px;text-align:center}
- .brand-name{font-size:15px;letter-spacing:0}
- .brand-sub,.nav-label,.nav-btn .nav-text,.upgrade,.user .user-info{display:none}
- .nav-btn{justify-content:center;padding:12px 0}
- .nav-btn .ico{font-size:18px}
- .user{justify-content:center;padding:14px 0 0}
- .main{margin-left:66px;width:calc(100% - 66px);padding:0 15px 40px}
- .topbar{height:62px}
- .status{font-size:8px;padding:7px 9px}
- .page{padding-top:25px}
- h1{font-size:24px}
- .hero{padding:22px;min-height:190px}
- .hero h2{font-size:21px}
- .hero-mark{font-size:55px;padding:0}
- .hero:after{right:-100px}
- .quick-grid,.lesson-grid{grid-template-columns:1fr}
- .lab-layout{grid-template-columns:1fr}
- .heading-row{align-items:flex-start;flex-direction:column}
-}
-@media(max-width:430px){
- .hero-mark{display:none}
- .stats{gap:9px}
- .stat-card{padding:13px}
- .stat-value{font-size:21px}
- .main{padding-left:11px;padding-right:11px}
- .workspace-tools{width:100%}
- .search{width:100%}
+@media(max-width:650px){
+.layout{display:block}
+.sidebar{position:relative;width:100%;height:auto;padding:12px}
+.logo{padding:8px 10px}
+.nav-label{display:none}
+.nav{display:flex;overflow-x:auto;gap:4px}
+.nav button{white-space:nowrap;width:auto}
+.main{margin:0;width:100%;padding:15px}
+.topbar h2{font-size:19px}
+.grid{grid-template-columns:repeat(2,1fr);gap:9px}
+.quick{grid-template-columns:1fr}
+.hero{padding:22px}
+.hero h1{font-size:24px}
+.row{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
-<div class="app">
+<div class="layout">
 <aside class="sidebar">
- <div>
-  <div class="brand">
-   <div class="brand-name">VEY<span>RO</span></div>
-   <div class="brand-sub">INTELLIGENCE, REDEFINED</div>
-  </div>
-  <div class="nav-label">OVERVIEW</div>
-  <button class="nav-btn active" data-page="dashboard"><span class="ico">⌂</span><span class="nav-text">Dashboard</span></button>
-  <div class="nav-label">YOUR WORKSPACE</div>
-  <button class="nav-btn" data-page="lab"><span class="ico">✳</span><span class="nav-text">VEYRO AI Lab</span></button>
-  <button class="nav-btn" data-page="analytics"><span class="ico">◫</span><span class="nav-text">Analytics Studio</span></button>
-  <button class="nav-btn" data-page="workspace"><span class="ico">▤</span><span class="nav-text">My Workspace</span></button>
-  <div class="nav-label">GROW & EXPLORE</div>
-  <button class="nav-btn" data-page="learning"><span class="ico">▧</span><span class="nav-text">Learning Hub</span></button>
-  <button class="nav-btn" data-page="about"><span class="ico">ⓘ</span><span class="nav-text">About VEYRO</span></button>
- </div>
- <div class="sidebar-bottom">
-  <div class="upgrade"><b>✦ Your ideas, organized.</b><p>One workspace for documents, learning and data.</p><button onclick="go('lab')">Explore AI Lab</button></div>
-  <div class="user"><div class="avatar">V</div><div class="user-info"><b>Personal Workspace</b><small>Free preview edition</small></div></div>
- </div>
+<div class="logo">VEYRO<small>INTELLIGENT WORKSPACE</small></div>
+<div class="nav-label">WORKSPACE</div>
+<nav class="nav">
+<button class="active" onclick="showPage('dashboard',this)">◈ Dashboard</button>
+<button onclick="showPage('assistant',this)">✦ VEYRO AI</button>
+<button onclick="showPage('lab',this)">▧ AI Lab</button>
+<button onclick="showPage('analytics',this)">◫ Analytics Studio</button>
+<button onclick="showPage('risk',this)">⌁ Risk Calculator</button>
+<button onclick="showPage('journal',this)">▤ Trading Journal</button>
+<button onclick="showPage('portfolio',this)">◉ Portfolio</button>
+<button onclick="showPage('workspace',this)">▣ Workspace</button>
+<button onclick="showPage('learning',this)">▤ Learning Hub</button>
+<button onclick="showPage('settings',this)">⚙ Settings</button>
+</nav>
 </aside>
 
 <main class="main">
- <header class="topbar">
-  <div class="breadcrumb">VEYRO <span style="color:#c2cbc4">/</span> <span id="crumb">Dashboard</span></div>
-  <div class="top-actions"><span class="status">● SYSTEM READY</span><button class="icon-btn" title="Workspace">⌘</button></div>
- </header>
- <div class="content">
+<header class="topbar">
+<div><h2 id="pageTitle">Dashboard</h2>
+<p class="muted">Your intelligent workspace</p></div>
+<button class="btn" onclick="toggleTheme()">◐ Theme</button>
+</header>
 
- <section class="page active" id="dashboard">
-  <div class="heading-row">
-   <div><div class="eyebrow">YOUR INTELLIGENT WORKSPACE</div><h1>Good to see you.</h1><p class="subtitle">Everything you need to organize, explore and understand your work.</p></div>
-   <button class="btn" onclick="go('lab')">＋ New project</button>
-  </div>
-  <div class="hero">
-   <div class="hero-copy">
-    <div class="eyebrow">WELCOME TO VEYRO</div>
-    <h2>Think clearly.<br>Discover more.</h2>
-    <p>A smarter space for document review, data exploration and continuous learning. Your work starts here.</p>
-    <button class="btn" onclick="go('lab')">Open VEYRO AI Lab&nbsp; →</button>
-   </div>
-   <div class="hero-mark">V.</div>
-  </div>
+<section id="dashboard" class="page active">
+<div class="hero">
+<h1>Welcome to VEYRO.</h1>
+<p>Your personal workspace for analysis, trading records, portfolio tracking and financial learning.</p>
+<button class="btn" onclick="showPage('assistant')">Explore VEYRO AI →</button>
+</div>
+<div class="grid">
+<div class="card">◈<div class="metric" id="dashTrades">0</div><div class="muted">Journal Entries</div></div>
+<div class="card">◉<div class="metric" id="dashAssets">0</div><div class="muted">Portfolio Assets</div></div>
+<div class="card">⌁<div class="metric">Risk</div><div class="muted">Calculator</div></div>
+<div class="card">▧<div class="metric">AI Lab</div><div class="muted">File Workspace</div></div>
+</div>
+<h3 class="section-title">Quick Access</h3>
+<div class="quick">
+<button onclick="showPage('lab')">▧<strong>AI Lab</strong><span class="muted">Choose files to review</span></button>
+<button onclick="showPage('analytics')">◫<strong>Analytics Studio</strong><span class="muted">Analysis notes</span></button>
+<button onclick="showPage('journal')">▤<strong>Trading Journal</strong><span class="muted">Record your trades</span></button>
+</div>
+</section>
 
-  <div class="grid stats">
-   <div class="card stat-card"><div class="stat-top"><span class="stat-name">FILES IN SESSION</span><span class="stat-icon">▤</span></div><div class="stat-value" id="statFiles">00</div><span class="stat-name">Selected files</span></div>
-   <div class="card stat-card"><div class="stat-top"><span class="stat-name">WORKSPACE AREAS</span><span class="stat-icon">◫</span></div><div class="stat-value">05</div><span class="stat-name">Available sections</span></div>
-   <div class="card stat-card"><div class="stat-top"><span class="stat-name">PLATFORM STATUS</span><span class="stat-icon">✳</span></div><div class="stat-value" style="font-size:19px">Ready</div><span class="stat-name">Front-end preview</span></div>
-   <div class="card stat-card"><div class="stat-top"><span class="stat-name">YOUR PROGRESS</span><span class="stat-icon">↗</span></div><div class="stat-value">Start</div><span class="stat-name">Your journey begins here</span></div>
-  </div>
+<section id="assistant" class="page">
+<div class="hero"><h1>VEYRO AI Assistant</h1>
+<p>A workspace assistant demo. Real AI responses require a secure backend and AI API.</p></div>
+<div class="panel">
+<div id="chatBox"><p class="muted">VEYRO: Hello! What would you like to work on?</p></div>
+<div class="field"><textarea id="chatInput" placeholder="Write your question..."></textarea></div>
+<button class="btn primary" onclick="sendChat()">Send message</button>
+</div>
+</section>
 
-  <div class="grid panel-grid">
-   <div class="card">
-    <div class="card-head"><span class="card-title">Quick access</span><span class="card-caption">YOUR TOOLS</span></div>
-    <div class="grid quick-grid">
-     <div class="quick" onclick="go('lab')"><div class="quick-icon">✳</div><b>AI Lab</b><p>Prepare files for review.</p></div>
-     <div class="quick" onclick="go('analytics')"><div class="quick-icon">◫</div><b>Analytics</b><p>Explore data concepts.</p></div>
-     <div class="quick" onclick="go('learning')"><div class="quick-icon">▧</div><b>Learning</b><p>Build your knowledge.</p></div>
-    </div>
-   </div>
-   <div class="card">
-    <div class="card-head"><span class="card-title">Recent activity</span><span class="card-caption">THIS SESSION</span></div>
-    <div id="activityList"><div class="empty">Your activity will appear here.</div></div>
-   </div>
-  </div>
- </section>
+<section id="lab" class="page">
+<div class="hero"><h1>AI Lab</h1><p>Select images, PDFs, spreadsheets or other documents for your workspace.</p></div>
+<div class="panel">
+<h3>Upload your files</h3>
+<div class="field"><input type="file" id="labFiles" multiple accept="image/*,.pdf,.csv,.xls,.xlsx,.txt"></div>
+<button class="btn primary" onclick="listFiles()">Add selected files</button>
+<div id="fileList" class="file-list"></div>
+<p class="muted">This demo lists selected files only. It does not read or analyze file contents. Real analysis needs a secure backend.</p>
+</div>
+</section>
 
- <section class="page" id="lab">
-  <div class="heading-row">
-   <div><div class="eyebrow">INTELLIGENT DOCUMENT WORKSPACE</div><h1>VEYRO AI Lab</h1><p class="subtitle">Bring your documents and data together in one place.</p></div>
-   <span class="status">● FILE WORKSPACE</span>
-  </div>
-  <div class="lab-layout">
-   <div>
-    <div class="card">
-     <div class="card-head"><span class="card-title">Upload your material</span><span class="card-caption">MAX 15 MB / FILE</span></div>
-     <label class="dropzone" for="fileInput">
-      <div class="drop-icon">⇧</div>
-      <h3>Drop your files here</h3>
-      <p>or click to browse your device<br>Choose documents, charts or data files to prepare your workspace.</p>
-      <span class="btn">Browse files</span>
-      <div class="formats"><span class="format">PDF</span><span class="format">JPG / PNG</span><span class="format">XLSX</span><span class="format">CSV</span></div>
-     </label>
-     <input id="fileInput" type="file" multiple hidden accept=".pdf,.jpg,.jpeg,.png,.webp,.xlsx,.xls,.csv">
-     <div class="section-title">Selected files <span class="card-caption" id="fileCountLabel">0 files</span></div>
-     <div id="fileList" class="file-list"><div class="empty">No files selected. Browse to add your first file.</div></div>
-    </div>
-    <div class="info-box"><b>Preview mode:</b> Files are listed in this browser session only. Their contents are not uploaded to an AI service or analyzed yet. A secure backend is needed to enable document reading and AI review.</div>
-   </div>
-   <div>
-    <div class="card">
-     <div class="card-head"><span class="card-title">What can you prepare?</span></div>
-     <div class="feature"><div class="feature-icon">▧</div><div><b>Chart images</b><p>Prepare chart screenshots for educational review.</p></div></div>
-     <div class="feature"><div class="feature-icon">PDF</div><div><b>PDF documents</b><p>Keep notes, reports and research documents together.</p></div></div>
-     <div class="feature"><div class="feature-icon">▦</div><div><b>Excel & CSV data</b><p>Prepare spreadsheets and structured datasets.</p></div></div>
-     <div class="feature"><div class="feature-icon">✎</div><div><b>Learning notes</b><p>Organize your material for later study.</p></div></div>
-    </div>
-    <div class="card" style="margin-top:15px">
-     <div class="card-title">Supported file formats</div>
-     <p class="subtitle" style="margin-top:10px">PDF, JPG, JPEG, PNG, WEBP, XLS, XLSX and CSV.</p>
-     <div class="info-box">For privacy, this preview does not send your files to any server.</div>
-    </div>
-   </div>
-  </div>
- </section>
+<section id="analytics" class="page">
+<div class="hero"><h1>Analytics Studio</h1><p>Organize your equity and crypto research notes.</p></div>
+<div class="panel">
+<h3>Analysis workspace</h3>
+<div class="field"><label>Asset name</label><input id="analysisAsset" placeholder="Example: BTC / Company"></div>
+<div class="field"><label>Market</label><select id="analysisMarket"><option>Equity</option><option>Crypto</option><option>Other</option></select></div>
+<div class="field"><label>Analysis notes</label><textarea id="analysisNotes" placeholder="Write your observations, assumptions and questions..."></textarea></div>
+<button class="btn primary" onclick="saveAnalysis()">Save notes</button>
+<div id="analysisList"></div>
+</div>
+</section>
 
- <section class="page" id="analytics">
-  <div class="heading-row"><div><div class="eyebrow">DATA & INSIGHTS</div><h1>Analytics Studio</h1><p class="subtitle">A dedicated space for understanding data and analytical concepts.</p></div></div>
-  <div class="grid lesson-grid">
-   <div class="card lesson"><div class="lesson-icon">◫</div><h3>Chart understanding</h3><p>Explore chart types, axes, labels, timeframes and visual patterns.</p><button class="btn btn-light" onclick="go('learning')">Explore learning</button></div>
-   <div class="card lesson"><div class="lesson-icon">▦</div><h3>Data organization</h3><p>Understand tables, columns, rows and basic spreadsheet structure.</p><button class="btn btn-light" onclick="go('lab')">Prepare a file</button></div>
-   <div class="card lesson"><div class="lesson-icon">◈</div><h3>Risk awareness</h3><p>Learn about uncertainty, assumptions and responsible research.</p><button class="btn btn-light" onclick="go('learning')">Start learning</button></div>
-  </div>
-  <div class="section-title">Analysis workspace</div>
-  <div class="card"><div class="empty">Your analysis area is ready for a future data-processing connection.<br><br><button class="btn" onclick="go('lab')">Add a file to AI Lab</button></div></div>
-  <div class="info-box">This area is for educational data exploration. It does not generate investment predictions or buy/sell recommendations.</div>
- </section>
+<section id="risk" class="page">
+<div class="hero"><h1>Risk Calculator</h1><p>Learn how position sizing changes with your planned risk.</p></div>
+<div class="panel">
+<div class="row">
+<div class="field"><label>Account capital</label><input type="number" id="capital" placeholder="10000"></div>
+<div class="field"><label>Risk percentage (%)</label><input type="number" id="riskPercent" value="1" step="0.1"></div>
+<div class="field"><label>Entry price</label><input type="number" id="entry" placeholder="100"></div>
+<div class="field"><label>Stop loss price</label><input type="number" id="stop" placeholder="95"></div>
+</div>
+<button class="btn primary" onclick="calculateRisk()">Calculate</button>
+<div id="riskResult"></div>
+<p class="muted">Educational estimate only. Fees, slippage, lot sizes and market gaps are not included. Actual losses can exceed planned risk.</p>
+</div>
+</section>
 
- <section class="page" id="workspace">
-  <div class="heading-row"><div><div class="eyebrow">YOUR FILES & PROJECTS</div><h1>My Workspace</h1><p class="subtitle">Keep track of files selected during this browser session.</p></div><button class="btn btn-light" onclick="go('lab')">＋ Add files</button></div>
-  <div class="card">
-   <div class="card-head"><span class="card-title">Your files</span><input class="search" id="searchFiles" placeholder="Search files..." oninput="renderFiles()"></div>
-   <div class="table-wrap"><table><thead><tr><th>FILE NAME</th><th>FORMAT</th><th>SIZE</th><th>ACTION</th></tr></thead><tbody id="workspaceRows"><tr><td colspan="4" class="empty">No files in your workspace yet.</td></tr></tbody></table></d
+<section id="journal" class="page">
+<div class="hero"><h1>Trading Journal</h1><p>Record decisions, outcomes and lessons from your practice.</p></div>
+<div class="panel">
+<div class="row">
+<div class="field"><label>Asset</label><input id="jAsset" placeholder="BTC / Stock"></div>
+<div class="field"><label>Market</label><select id="jMarket"><option>Equity</option><option>Crypto</option><option>Other</option></select></div>
+<div class="field"><label>Entry price</label><input type="number" id="jEntry"></div>
+<div class="field"><label>Exit price</label><input type="number" id="jExit"></div>
+</div>
+<div class="field"><label>Lesson / Notes</label><textarea id="jNotes" placeholder="What did you learn?"></textarea></div>
+<button class="btn primary" onclick="addJournal()">Save journal entry</button>
+</div>
+<div class="panel"><h3>Your Journal</h3><div id="journalList"></div></div>
+</section>
+
+<section id="portfolio" class="page">
+<div class="hero"><h1>Portfolio Tracker</h1><p>Manually record assets for personal tracking.</p></div>
+<div class="panel">
+<div class="row">
+<div class="field"><label>Asset</label><input id="pAsset" placeholder="Asset name"></div>
+<div class="field"><label>Category</label><select id="pCategory"><option>Equity</option><option>Crypto</option><option>Other</option></select></div>
+<div class="field"><label>Quantity</label><input type="number" id="pQty"></div>
+<div class="field"><label>Average price</label><input type="number" id="pPrice"></div>
+</div>
+<button class="btn primary" onclick="addPortfolio()">Add asset</button>
+</div>
+<div class="panel"><h3>My Assets</h3><div id="portfolioList"></div></div>
+</section>
+
+<section id="workspace" class="page">
+<div class="hero"><h1>Workspace</h1><p>Keep your project notes and file references organized.</p></div>
+<div class="panel">
+<h3>Project notes</h3>
+<div class="field"><input id="workTitle" placeholder="Project title"></div>
+<div class="field"><textarea id="workNotes" placeholder="Write project details..."></textarea></div>
+<button class="btn primary" onclick="saveWork()">Save project</button>
+<div id="workList"></div>
+</div>
+</section>
+
+<section id="learning" class="page">
+<div class="hero"><h1>Learning Hub</h1><p>Build your knowledge step by step.</p></div>
+<div class="grid">
+<div class="card"><h3>Market Basics</h3><p class="muted">Learn market structure, exchanges and orders.</p></div>
+<div class="card"><h3>Technical Analysis</h3><p class="muted">Study trends, charts and indicators.</p></div>
+<div class="card"><h3>Fundamental Analysis</h3><p class="muted">Understand business and financial statements.</p></div>
+<div class="card"><h3>Risk Management</h3><p class="muted">Learn risk, diversification and discipline.</p></div>
+</div>
+<div class="panel">
+<h3>Learning Resources</h3>
+<p><a href="https://investor.sebi.gov.in/" target="_blank" rel="noopener">SEBI Investor Education</a></p>
+<p><a href="https://www.investor.gov/" target="_blank" rel="noopener">Investor.gov</a></p>
+</div>
+</section>
+
+<section id="settings" class="page">
+<div class="hero"><h1>Settings</h1><p>Manage your local VEYRO workspace.</p></div>
+<div class="panel">
+<h3>Appearance</h3>
+<button class="btn" onclick="toggleTheme()">Switch Light / Dark Theme</button>
+</div>
+<div class="panel">
+<h3>Data Management</h3>
+<button class="btn primary" onclick="exportData()">Export my data</button>
+<button class="btn danger" onclick="clearData()">Clear local data</button>
+<p class="muted">Journal, portfolio and notes are stored in this browser on this device.</p>
+</div>
+</section>
+
+<footer>VEYRO © 2026 · Personal workspace demo · Not financial advice.</footer>
+</main>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+function read(key){try{return JSON.parse(localStorage.getItem(key)||"[]")}catch(e){return []}}
+function write(key,value){localStorage.setItem(key,JSON.stringify(value))}
+function showPage(id,button){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+$(id).classList.add("active");
+document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
+if(button)button.classList.add("active");
+const names={dashboard:"Dashboard",assistant:"VEYRO AI",lab:"AI Lab",analytics:"Analytics Studio",risk:"Risk Calculator",journal:"Trading Journal",portfolio:"Portfolio",workspace:"Workspace",learning:"Learning Hub",settings:"Settings"};
+$("pageTitle").textContent=names[id]||"VEYRO";
+}
+function toggleTheme(){document.body.classList.toggle("dark");localStorage.setItem("veyroTheme",document.body.classList.contains("dark")?"dark":"light")}
+if(localStorage.getItem("veyroTheme")==="dark")document.body.classList.add("dark");
+
+function sendChat(){
+let input=$("chatInput"),message=input.value.trim();
+if(!message)return;
+let box=$("chatBox");
+box.innerHTML+="<p><b>You:</b> "+escapeHTML(message)+"</p>";
+box.innerHTML+="<p class='muted'><b>VEYRO:</b> This is a demo assistant. Connect a secure AI backend to receive real AI answers.</p>";
+input.value="";
+}
+function escapeHTML(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+
+function listFiles(){
+let files=[...$("labFiles").files];
+if(!files.length){$("fileList").textContent="Choose files first.";return}
+$("fileList").innerHTML=files.map(f=>"<div class='item'>▧ "+escapeHTML(f.name)+" <span class='tag'>Selected</span></div>").join("");
+}
+function calculateRisk(){
+let capital=+$("capital").value,risk=+$("riskPercent").value;
+let entry=+$("entry").value,stop=+$("stop").value;
+let box=$("riskResult");
+if(!(capital>0&&risk>0&&risk<=100&&entry>0&&stop>0&&entry!==stop)){
+box.textContent="Please enter valid positive values. Entry and stop must differ.";return;
+}
+let amount=capital*risk/100,perUnit=Math.abs(entry-stop),qty=amount/perUnit;
+box.innerHTML="<div class='result'>Planned risk amount: "+amount.toFixed(2)+"<br>Risk per unit: "+perUnit.toFixed(4)+"<br>Estimated quantity: "+qty.toFixed(4)+"<br>Estimated position value: "+(qty*entry).toFixed(2)+"</div>";
+}
+function addJournal(){
+let asset=$("jAsset").value.trim(),entry=+$("jEntry").value,exit=+$("jExit").value;
+if(!asset||!entry||!exit){alert("Enter asset, entry and exit prices.");return}
+let data=read("veyroJournal");
+data.unshift({asset,market:$("jMarket").value,entry,exit,notes:$("jNotes").value,date:new Date().toLocaleDateString()});
+write("veyroJournal",data);$("jAsset").value="";$("jEntry").value="";$("jExit").value="";$("jNotes").value="";
+render();
+}
+function deleteItem(key,index){let data=read(key);data.splice(index,1);write(key,data);render()}
+function addPortfolio(){
+let asset=$("pAsset").value.trim(),qty=+$("pQty").value,price=+$("pPrice").value;
+if(!asset||qty<=0||price<=0){alert("Enter valid asset, quantity and price.");return}
+let data=read("veyroPortfolio");
+data.push({asset,category:$("pCategory").value,qty,price});
+write("veyroPortfolio",data);$("pAsset").value="";$("pQty").value="";$("pPrice").value="";render();
+}
+function saveAnalysis(){
+let asset=$("analysisAsset").value.trim(),notes=$("analysisNotes").value.trim();
+if(!asset||!notes){alert("Enter asset and notes.");return}
+let data=read("veyroAnalysis");
+data.unshift({asset,market:$("analysisMarket").value,notes});
+write("veyroAnalysis",data);$("analysisAsset").value="";$("analysisNotes").value="";render();
+}
+function saveWork(){
+let title=$("workTitle").value.trim(),notes=$("workNotes").value.trim();
+if(!title){alert("Enter a project title.");return}
+let data=read("veyroWork");data.unshift({title,notes});
+write("veyroWork",data);$("workTitle").value="";$("workNotes").value="";render();
+}
+function render(){
+let journals=read("veyroJournal"),portfolio=read("veyroPortfolio");
+$("dashTrades").textContent=journals.length;$("dashAssets").textContent=portfolio.length;
+$("journalList").innerHTML=journals.length?journals.map((x,i)=>"<div class='item'><b>"+escapeHTML(x.asset)+"</b> · "+escapeHTML(x.market)+"<p class='muted'>Entry: "+x.entry+" | Exit: "+x.exit+" | "+escapeHTML(x.date)+"</p><p>"+escapeHTML(x.notes||"No notes")+"</p><button class='btn' onclick='deleteItem(\"veyroJournal\","+i+")'>Delete</button></div>").join(""):"<p class='muted'>No journal entries yet.</p>";
+$("portfolioList").innerHTML=portfolio.length?portfolio.map((x,i)=>"<div class='item'><b>"+escapeHTML(x.asset)+"</b> · "+escapeHTML(x.category)+"<p class='muted'>Quantity: "+x.qty+" | Average price: "+x.price+" | Recorded value: "+(x.qty*x.price).toFixed(2)+"</p><button class='btn' onclick='deleteItem(\"veyroPortfolio\","+i+")'>Delete</button></div>").join(""):"<p class='muted'>No assets added yet.</p>";
+$("analysisList").innerHTML=read("veyroAnalysis").map(x=>"<div class='item'><b>"+escapeHTML(x.asset)+"</b> · "+escapeHTML(x.market)+"<p>"+escapeHTML(x.notes)+"</p></div>").join("");
+$("workList").innerHTML=read("veyroWork").map(x=>"<div class='item'><b>"+escapeHTML(x.title)+"</b><p>"+escapeHTML(x.notes)+"</p></div>").join("");
+}
+function exportData(){
+let obj={journal:read("veyroJournal"),portfolio:read("veyroPortfolio"),analysis:read("veyroAnalysis"),workspace:read("veyroWork")};
+let blob=new Blob([JSON.stringify(obj,null,2)],{type:"application/json"});
+let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="veyro-data.json";a.click();URL.revokeObjectURL(a.href);
+}
+function clearData(){
+if(!confirm("Delete all VEYRO journal, portfolio and notes saved in this browser?"))return;
+["veyroJournal","veyroPortfolio","veyroAnalysis","veyroWork"].forEach(k=>localStorage.removeItem(k));render();
+}
+render();
+</script>
+</body>
+</html>
